@@ -2,11 +2,7 @@
 
 use JetBrains\PhpStorm\NoReturn;
 
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);
-
-require_once "../lib/php/config.php";
+require_once "../../lib/php/config.php";
 
 session_start();
 session_unset();
@@ -63,9 +59,17 @@ if (empty($_SESSION['errors_code'])) {
     if (!empty($_SESSION['errors_code'])) end_and_close();
 
     $password = password_hash($password, PASSWORD_DEFAULT);
-    $sql = "INSERT INTO account (username, email, password) VALUES ('$username', '$email', '$password')";
+    $sqlAccount = "INSERT INTO account (username, email, password) VALUES ('$username', '$email', '$password')";
+
     try {
-        $conn->query($sql);
+        $conn->query($sqlAccount);
+        $account_id = $conn->query("SELECT LAST_INSERT_ID()")->fetch_row()[0];
+
+        $sqlAccountPayment = "INSERT INTO account_payment_info (account_id, phone_number, address) VALUES ($account_id, '', '')";
+        $sqlAccountProfile = "INSERT INTO account_profile (account_id) VALUES ($account_id)";
+
+        $conn->query($sqlAccountPayment);
+        $conn->query($sqlAccountProfile);
         header("Location: /auth");
     } catch (Throwable $th) {
         $_SESSION['errors_code'][] = "sql_exception";

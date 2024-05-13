@@ -1,13 +1,15 @@
 <?php
+
 class SQL
 {
-    private $servername;
-    private $username;
-    private $password;
-    private $dbname;
-    private $conn;
-    public $result;
-    public $error;
+    public false|mysqli_result $result;
+    public null|string $error = null;
+    private string $servername;
+    private string $username;
+    private string $password;
+    private string $dbname;
+    private mysqli $conn;
+
     public function __construct($servername, $username, $password, $dbname)
     {
         $this->servername = $servername;
@@ -20,12 +22,12 @@ class SQL
                 die("Kết nối thất bại: " . $this->conn->connect_error . "\n");
             }
             mysqli_set_charset($this->conn, 'utf8');
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             die("Lỗi kết nối CSDL: " . $th->getMessage() . "\n");
         }
     }
 
-    public function query($sql, $params = [])
+    public function query($sql, $params = []): false|mysqli_result
     {
         if (empty($sql)) {
             echo "Query is empty";
@@ -38,37 +40,51 @@ class SQL
             $this->error = $this->conn->error;
             return false;
         }
-        $stmt->execute($params);
-        $this->result = $stmt->get_result();
-        if ($this->result === false) {
+        $type_params = "";
+        foreach ($params as $param) {
+            if (is_int($param)) {
+                $type_params .= "i";
+            } else if (is_float($param)) {
+                $type_params .= "d";
+            } else {
+                $type_params .= "s";
+            }
+        }
+        if (!empty($type_params)) {
+            $stmt->bind_param($type_params, ...$params);
+        }
+        $process = $stmt->execute();
+
+        if (!$process) {
             $this->error = $this->conn->error;
             return false;
         }
+        $this->result = $stmt->get_result();
         return $this->result;
     }
 
-    public function fetch_once()
+    public function fetch_once(): false|array|null
     {
         return $this->result->fetch_assoc();
     }
 
-    public function fetch_all()
+    public function fetch_all(): array
     {
         return $this->result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function error()
+    public function error(): string
     {
         return $this->error;
-    }
-
-    public function close()
-    {
-        $this->conn->close();
     }
 
     public function __destruct()
     {
         $this->close();
+    }
+
+    public function close(): void
+    {
+        $this->conn->close();
     }
 }

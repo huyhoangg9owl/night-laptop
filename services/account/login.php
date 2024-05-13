@@ -3,7 +3,7 @@ ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
-require_once "../lib/php/config.php";
+require_once "../../lib/php/config.php";
 require_once ROOT_PATH . "/utils/account.php";
 
 session_start();
@@ -24,7 +24,11 @@ if (empty($password)) $_SESSION['errors_code'][] = "missing_password";
 
 if (empty($_SESSION['errors_code'])) {
     try {
-        $query = "SELECT * FROM account WHERE username = ?";
+        if (str_contains($username, '@')) {
+            $query = "SELECT * FROM account WHERE email = ?";
+        } else {
+            $query = "SELECT * FROM account WHERE username = ?";
+        }
         $conn->query($query, [$username]);
         $result = $conn->fetch_once();
         if ($result) {

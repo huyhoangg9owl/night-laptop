@@ -1,6 +1,12 @@
 <?php
-$alias = require_once 'alias.php';
-require_once $alias('@lib/SQL.php');
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+
+error_reporting(E_ALL);
+
+
+require_once dirname(__FILE__) . "/root_path.php";
+require_once ROOT_PATH . '/utils/SQL.php';
 
 $servername = "localhost";
 $username = "root";
@@ -8,4 +14,4 @@ $password = "";
 $dbname = "night_laptop";
 $conn = new SQL($servername, $username, $password, $dbname);
 
-$GLOBALS['conn'] = $conn;
+global $conn;

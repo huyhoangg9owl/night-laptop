@@ -1,8 +1,10 @@
 <?php
 global $account;
+global $account_profile;
+global $account_payment;
 ?>
 
-<form action="/services/account/update" method="post" class="px-4 w-full flex flex-row gap-6">
+<form action="/services/account/update" method="post" class="px-4 w-full flex flex-row gap-6" enctype="multipart/form-data">
     <div class="w-3/4">
         <h1 class="text-2xl font-semibold mb-4">Thông tin tài khoản</h1>
         <div class="w-full flex flex-row gap-4 pl-4">
@@ -15,20 +17,24 @@ global $account;
                 <input type="text" name="email" id="email" class="w-full border border-gray-300 rounded-md p-2 mt-1 dark:text-black" value="<?= $account['email'] ?>">
             </div>
         </div>
+        <p class="text-center mt-2 text-sm text-red-600 dark:text-red-400 font-semibold">Lưu ý: Thay đổi một trong hai
+            dữ liệu trên
+            cần đăng nhập
+            lại</p>
 
         <h1 class="text-2xl font-semibold mt-8 mb-4">Thông tin thanh toán</h1>
         <div class="w-full flex flex-row gap-4 pl-4">
             <div class="w-full">
                 <label for="phone" class="text-lg font-normal">Số điện thoại</label>
-                <input type="text" name="phone" id="phone" class="w-full border border-gray-300 rounded-md p-2 mt-1 dark:text-black" value="<?= $account['phone'] ?? "" ?>">
+                <input type="text" name="phone" id="phone" class="w-full border border-gray-300 rounded-md p-2 mt-1 dark:text-black" value="<?= $account_payment['phone_number'] ?? "" ?>">
             </div>
             <div class="w-full">
-                <label for="address" class="text-lg font-normal">Địa chỉ mặc định</label>
-                <input type="text" name="address" id="address" class="w-full border border-gray-300 rounded-md p-2 mt-1 dark:text-black" value="<?= $account['address'] ?? "" ?>">
+                <label for="address" class="text-lg font-normal">Địa chỉ (Mặc định)</label>
+                <input type="text" name="address" id="address" class="w-full border border-gray-300 rounded-md p-2 mt-1 dark:text-black" value="<?= $account_payment['address'] ?? "" ?>">
             </div>
         </div>
         <div class="w-full mt-4 pl-4 flex flex-row gap-8">
-            <p class="text-lg font-normal">Phương thức thanh toán</p>
+            <p class="text-lg font-normal">Phương thức thanh toán (Mặc định)</p>
             <div class="flex flex-row gap-4 mt-2">
                 <div class="flex flex-row items-center justify-center gap-2" title="Chưa hỗ trợ!">
                     <input type="radio" name="payment_method" id="payment_method_1" value="1" disabled>
@@ -36,18 +42,15 @@ global $account;
                 </div>
                 <div class="flex flex-row items-center justify-center gap-2" title="Chưa hỗ trợ!">
                     <input type="radio" name="payment_method" id="payment_method_2" value="2" disabled>
-                    <label for="payment_method_2" class="text-sm font-normal">MoMo
-                    </label>
+                    <label for="payment_method_2" class="text-sm font-normal">MoMo</label>
                 </div>
                 <div class="flex flex-row items-center justify-center gap-2" title="Chưa hỗ trợ!">
                     <input type="radio" name="payment_method" id="payment_method_3" value="3" disabled>
-                    <label for="payment_method_3" class="text-sm font-normal">Paypal
-                    </label>
+                    <label for="payment_method_3" class="text-sm font-normal">Paypal</label>
                 </div>
                 <div class="flex flex-row items-center justify-center gap-2" title="Thanh toán sau khi nhận hàng.">
                     <input type="radio" name="payment_method" id="payment_method_4" value="4" checked>
-                    <label for="payment_method_4" class="text-sm font-normal">Thanh toán khi nhận hàng
-                    </label>
+                    <label for="payment_method_4" class="text-sm font-normal">Thanh toán khi nhận hàng</label>
                 </div>
             </div>
         </div>
@@ -72,7 +75,7 @@ global $account;
     <div class="w-1/4 flex flex-col items-center">
         <span class="text-lg font-normal mb-2">Ảnh đại diện</span>
         <label for="avatar" class="size-48 relative cursor-pointer rounded-full overflow-hidden group/avatar flex flex-col items-center justify-center">
-            <img src="/assets/images/default-avatar.png" alt="avatar" class="w-full" id="avatar-preview">
+            <img src="<?= $account_profile['avatar'] ?>" alt="avatar" class="w-full" id="avatar-preview">
             <input type="file" name="avatar" id="avatar" class="hidden" accept="image/*">
             <div class="group-hover/avatar:flex w-full h-full absolute top-0 left-0 bg-black/20 hidden flex-col items-center justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="size-6 fill-white">

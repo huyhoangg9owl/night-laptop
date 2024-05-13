@@ -1,14 +1,18 @@
 <?php
+
 class Route
 {
-    public function init()
+    public function init(): string
     {
         $uri = $_REQUEST['uri'] ?? "";
         return $this->dynamicRoutes($uri);
     }
 
-    private function dynamicRoutes($uri)
+    private function dynamicRoutes($uri): string
     {
+        if (str_contains($uri, "upload")) {
+            return $uri;
+        }
         if ($uri === "") $uri = "index";
         $uri = $this->cleanPath($uri);
         $rootPath = $_SERVER['DOCUMENT_ROOT'] . "/pages/";
@@ -19,15 +23,23 @@ class Route
             $path = $path . "/index";
             return $path . ".php";
         } else {
-            $uri = $this->paramsPath($uri, $rootPath);
-            return $uri;
+            return $this->paramsPath($uri, $rootPath);
         }
     }
 
-    private function paramsPath($uri, $rootPath)
+    private function cleanPath($uri): string
+    {
+        $uri = explode("?", $uri);
+        $uri = $uri[0];
+        $uri = explode("#", $uri);
+        $uri = $uri[0];
+        return trim($uri, "/");
+    }
+
+    private function paramsPath($uri, $rootPath): string
     {
         $checkPathArray = array_merge([""], explode("/", $uri));
-        $rootPath = $this->cleanPath($rootPath);
+        $this->cleanPath($rootPath);
         $path = "pages";
         for ($i = 0; $i < count($checkPathArray); $i++) {
             $currentPath = $this->cleanPath($path);
@@ -35,12 +47,16 @@ class Route
             if (file_exists($nextPath . ".php") || is_dir($nextPath)) {
                 $path = $this->cleanPath($nextPath);
             } else {
+                if (!is_dir($currentPath)) {
+                    $path = "pages/not-found.php";
+                    break;
+                }
                 $dirs = scandir($currentPath);
                 $dirs = array_filter($dirs, function ($dir) {
                     return $dir !== "." && $dir !== "..";
                 });
                 $dirs = array_filter($dirs, function ($dir) {
-                    return strpos($dir, "[") !== false && strpos($dir, "]") !== false;
+                    return str_contains($dir, "[") && str_contains($dir, "]");
                 });
                 if (count($dirs) === 0) {
                     $path = "pages/not-found.php";
@@ -55,15 +71,6 @@ class Route
 
         return $path;
     }
-
-    private function cleanPath($uri)
-    {
-        $uri = explode("?", $uri);
-        $uri = $uri[0];
-        $uri = explode("#", $uri);
-        $uri = $uri[0];
-        $uri = trim($uri, "/");
-        return $uri;
-    }
 }
-return new Route($alias);
+
+return new Route();

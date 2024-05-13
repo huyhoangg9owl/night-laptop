@@ -1,0 +1,13 @@
+<IfModule mod_rewrite.c>
+	IndexIgnore *
+	Options +FollowSymLinks
+	Options +MultiViews
+	Options -Indexes
+	RewriteEngine On
+
+	RewriteBase /
+
+	RewriteCond %{SCRIPT_FILENAME} !-d
+	RewriteCond %{SCRIPT_FILENAME} !-f
+	RewriteRule ^(.+)$ index.php?uri=$1 [QSA,L]
+</IfModule>

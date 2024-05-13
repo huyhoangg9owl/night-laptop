@@ -1,5 +1,5 @@
-import Admin from './admin';
-import Global from './global';
+import Admin from './admin/index';
+import Global from './global/index';
 import Home from './pages/home';
 function main() {
     const HTML = document.querySelector('html');
