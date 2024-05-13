@@ -1,3 +1,4 @@
 .vscode
 *.sh
 /tailwind.config.js
+/upload/*
