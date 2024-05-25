@@ -1,10 +1,9 @@
 <?php
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);
+require_once "../../config/config.php";
+require_once ROOT_PATH . "/utils/Account.php";
 
-require_once "../../lib/php/config.php";
-require_once ROOT_PATH . "/utils/account.php";
+
+global $conn;
 
 session_start();
 session_unset();
@@ -12,7 +11,6 @@ session_unset();
 $username = $_POST['username'] ?? '';
 $password = $_POST['password'] ?? '';
 
-$conn = $GLOBALS['conn'];
 
 $_SESSION['username'] = $username;
 $_SESSION['password'] = $password;

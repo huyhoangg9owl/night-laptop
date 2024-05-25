@@ -41,9 +41,8 @@ export default class Carousel {
             this.carouselNextButton.addEventListener('click', () => this.next());
         }
         document.addEventListener('resize', ({ target }) => {
-            if (target) {
+            if (target)
                 this.changeCSS(this.currentItem);
-            }
         });
     }
     ResizeBreakPoint() {
@@ -52,6 +51,7 @@ export default class Carousel {
             const { innerWidth } = window;
             breakpoint.forEach(({ screen, itemPerSlide }) => {
                 if (innerWidth <= screen) {
+                    this.options.itemPerSlide = itemPerSlide;
                     this.resizeItems(itemPerSlide);
                 }
                 else {
@@ -69,10 +69,8 @@ export default class Carousel {
         this.carouselItems.forEach((item, index) => {
             item.style.width = `${parentWidth / itemPerSlide - gap + gap / itemPerSlide}px`;
             item.style.marginRight = `${gap}px`;
-            if (this.carouselItemsLength - 1 - itemPerSlide + this.currentItem === index ||
-                (this.currentItem > 0 && index <= this.currentItem - 1)) {
+            if (index <= this.currentItem - 1 || (index + 1) % itemPerSlide === 0)
                 item.style.marginRight = '0';
-            }
         });
     }
     prev() {

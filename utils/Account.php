@@ -19,8 +19,13 @@ class Account
         return null;
     }
 
-    public function getAccount(): array|null
+    public function getAccount(int|null $id = null): array|null
     {
+        if (isset($id)) {
+            global $conn;
+            $result = $conn->query("SELECT * FROM account WHERE id = ?", [$id]);
+            if ($result) return $result->fetch_assoc();
+        }
         if ($this->checkToken()) return $this->account;
         return null;
     }
@@ -60,11 +65,11 @@ class Account
         return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
     }
 
-    public function getAccountProfile()
+    public function getAccountProfile(int|null $id = null)
     {
         global $conn;
-        if ($this->checkToken()) {
-            $id = $this->getAccountID();
+        if ($this->checkToken() || isset($id)) {
+            $id = $id ?? $this->getAccountID();
             $result = $conn->query("SELECT * FROM account_profile WHERE account_id = ?", [$id]);
             if ($result) return $conn->fetch_once();
             return null;
@@ -86,15 +91,34 @@ class Account
         return null;
     }
 
-    public function getAccountPayment()
+    public function getAccountPayment(int|null $id = null)
     {
         global $conn;
         if ($this->checkToken()) {
-            $id = $this->getAccountID();
+            $id = $id ?? $this->getAccountID();
             $result = $conn->query("SELECT * FROM account_payment_info WHERE account_id = ?", [$id]);
             if ($result) return $conn->fetch_once();
             return null;
         }
         return null;
+    }
+
+    public function getAllAccount()
+    {
+        global $conn;
+        $result = $conn->query("SELECT * FROM account");
+        if ($result) return $conn->fetch_all();
+        return null;
+    }
+
+    public function deleteAccount(int $id): void
+    {
+        try {
+            global $conn;
+            $conn->query("DELETE FROM account_profile WHERE account_id = ?", [$id]);
+            $conn->query("DELETE FROM account_payment_info WHERE account_id = ?", [$id]);
+            $conn->query("DELETE FROM account WHERE id = ?", [$id]);
+        } catch (\Throwable $th) {
+        }
     }
 }

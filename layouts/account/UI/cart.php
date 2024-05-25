@@ -1,8 +1,3 @@
-<?php
-global $account;
-global $account_profile;
-global $account_payment;
-?>
 <div class="grid grid-cols-10 relative w-full h-full">
     <article class="bg-gray-100 dark:bg-black/20 w-full col-span-7 p-6">
         <h2 class="font-manrope font-bold text-3xl leading-10 text-black dark:text-white pb-8 border-b border-gray-300">

@@ -1,7 +1,6 @@
 <?php
-require_once ROOT_PATH . '/utils/account.php';
-
-global $body_component;
+require_once ROOT_PATH . '/utils/Account.php';
+require_once ROOT_PATH . '/utils/Category.php';
 global $conn;
 
 session_start();
@@ -19,27 +18,29 @@ if (isset($account)) {
     $account_profile = $account->getAccountProfile();
     $account = $account->getAccount();
 }
+
+$categories = new Category();
+$categories = $categories->getCategories();
 ?>
 <!DOCTYPE html>
 <html lang="en" class="light h-full">
-<?php require_once 'components/template/head.php' ?>
+<?php require_once ROOT_PATH . '/components/template/head.php' ?>
 
-<body class="w-full min-h-dvh h-full bg-slate-200 dark:bg-zinc-700 relative dark:text-white transition-colors duration-300 be-vietnam-pro-light">
-<?php
-if (!$no_header) require_once 'components/template/header.php';
-require_once $body_component;
-?>
-<button id="scroll-to-top"
-        class="fixed bottom-4 right-4 p-2 bg-slate-300 dark:bg-zinc-800 rounded-full shadow-md hidden">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 text-white w-6" fill="none" viewBox="0 0 24 24"
-         stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
-    </svg>
-</button>
-<?php
-if (!$no_footer) require_once 'components/template/footer.php';
-session_write_close();
-?>
+<body class="be-vietnam-pro-light relative h-full min-h-dvh w-full bg-slate-200 transition-colors duration-300 dark:bg-zinc-700 dark:text-white">
+    <?php
+    if (!isset($body_component)) global $body_component;
+    if (!$no_header) require_once ROOT_PATH . '/components/template/header.php';
+    require_once $body_component;
+    ?>
+    <button id="scroll-to-top" class="fixed bottom-4 right-4 hidden rounded-full bg-slate-300 p-2 shadow-md dark:bg-zinc-800">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+    </button>
+    <?php
+    if (!$no_footer) require_once 'components/template/footer.php';
+    session_write_close();
+    ?>
 </body>
 
 </html>

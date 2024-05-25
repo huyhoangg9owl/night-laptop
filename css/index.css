@@ -27,7 +27,7 @@
 	text-decoration-line: none;
 	box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #d6d6e7 0 -3px 0 inset;
 	list-style: none;
-	transition: box-shadow 0.15s transform 0.15s;
+	transition: box-shadow 0.15s, transform 0.15s linear;
 }
 
 .toggle-btn:hover {
@@ -101,6 +101,7 @@ input[type='number'] {
 	-moz-appearance: textfield;
 	appearance: textfield;
 }
+
 input[type='number']::-webkit-inner-spin-button,
 input[type='number']::-webkit-outer-spin-button {
 	-webkit-appearance: none;

@@ -7,6 +7,7 @@ class UploadFile
     private mixed $allowedTypes;
     private int $maxSize;
     private string $fileName;
+    private string $dir = "/upload";
 
     public function __construct($file)
     {
@@ -31,10 +32,13 @@ class UploadFile
     /**
      * @throws Exception
      */
-    public function upload(): void
+    public function upload(mixed $size = ["width" => 200, "height" => 200]): void
     {
         if (!is_dir($this->uploadDir)) {
-            chmod(ROOT_PATH . "/upload", 777);
+            if (!is_dir(ROOT_PATH . $this->dir)) {
+                mkdir(ROOT_PATH . $this->dir, 0777);
+                chmod(ROOT_PATH . $this->dir, 0777);
+            }
             mkdir($this->uploadDir, 0777, true);
         }
 
@@ -48,7 +52,7 @@ class UploadFile
 
         $this->fileName = $this->fileName ?? pathinfo($this->file["name"], PATHINFO_FILENAME);
 
-        $path = $this->uploadDir . "/" . $this->fileName . "." . pathinfo($this->file["name"], PATHINFO_EXTENSION);
+        $path = $this->uploadDir . "/" . $this->fileName;
         move_uploaded_file($this->file["tmp_name"], $path);
 
         if (in_array($this->file["type"], ["image/png", "image/jpeg", "image/jpg"])) {
@@ -59,23 +63,23 @@ class UploadFile
                 $image = imagecreatefromjpeg($path);
             }
 
-            $tmp = $this->cropToSquare($image, 200);
+            $tmp = $this->crop($image, $size);
             imagejpeg($tmp, $path);
         }
     }
 
-    private function cropToSquare($image, $size): mixed
+    private function crop(GdImage|false $image, mixed $size): mixed
     {
         $width = imagesx($image);
         $height = imagesy($image);
 
         $min = min($width, $height);
 
-        $x = ($width - $min) / 2;
-        $y = ($height - $min) / 2;
+        $x = (int)(($width - $min) / 2);
+        $y = (int)(($height - $min) / 2);
 
-        $tmp = imagecreatetruecolor($size, $size);
-        imagecopyresampled($tmp, $image, 0, 0, $x, $y, $size, $size, $min, $min);
+        $tmp = imagecreatetruecolor($size['width'], $size['height']);
+        imagecopyresampled($tmp, $image, 0, 0, $x, $y, $size['width'], $size['height'], $min, $min);
 
         return $tmp;
     }

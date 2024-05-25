@@ -1,5 +1,5 @@
 <?php
-require_once ROOT_PATH . '/utils/account.php';
+require_once ROOT_PATH . '/utils/Account.php';
 $account = new Account();
 
 if ($account->getAccount()) {

@@ -1,24 +1,16 @@
-<nav class="z-50 w-full max-w-full bg-white border rounded-none shadow-md h-max border-white/80 bg-opacity-80 backdrop-blur-2xl backdrop-saturate-200 dark:bg-zinc-600/80 dark:border-zinc-600/80 sticky top-0 left-0">
-    <ul class="container flex flex-row flex-wrap items-center justify-center gap-x-6 mx-auto py-2">
+<nav class="sticky left-0 top-0 z-[999] h-max w-full max-w-full rounded-none border border-white/80 bg-white bg-opacity-80 shadow-md backdrop-blur-2xl backdrop-saturate-200 dark:border-zinc-600/80 dark:bg-zinc-600/80">
+    <ul class="container mx-auto flex flex-row flex-wrap items-center justify-center gap-x-6 py-2">
         <?php
-        global $brands;
-        function Brands($brands): void
-        {
-            foreach ($brands as $brand) {
-                $slug = $brand['slug'];
-                $name = $brand['name'];
-                $desc = $brand['desc'];
+        foreach ($categories as $category_navbar) {
+            $slug = $category_navbar['slug'];
+            $name = $category_navbar['name'];
         ?>
-                <li class="flex items-center relative">
-                    <a href="/brand/<?= $slug ?>" class="text-gray-600 dark:text-white hover:text-gray-800 dark:hover:text-gray-200 py-1 font-semibold" title="<?= $desc ?>">
-                        <?= $name ?>
-                    </a>
-                </li>
-        <?php
-            }
-        }
-
-        Brands($brands);
+            <li class="relative flex items-center">
+                <a href="/category/<?= $slug ?>" class="py-1 font-semibold text-gray-600 hover:text-gray-800 dark:text-white dark:hover:text-gray-200">
+                    <?= $name ?>
+                </a>
+            </li>
+        <?php }
         ?>
     </ul>
 </nav>

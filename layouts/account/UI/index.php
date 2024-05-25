@@ -1,9 +1,3 @@
-<?php
-global $account;
-global $account_profile;
-global $account_payment;
-?>
-
 <form action="/services/account/update" method="post" class="px-4 w-full flex flex-row gap-6" enctype="multipart/form-data">
     <div class="w-3/4">
         <h1 class="text-2xl font-semibold mb-4">Thông tin tài khoản</h1>
@@ -68,8 +62,8 @@ global $account_payment;
         </div>
 
         <div class="mt-8">
-            <button type="submit" class="px-5 py-2 bg-sky-600 rounded font-normal">Thay đổi</button>
-            <button type="reset" class="px-5 py-2 bg-red-600 rounded ml-4 font-normal">Hủy</button>
+            <button type="submit" class="px-5 py-2 bg-sky-600 rounded font-normal text-white">Thay đổi</button>
+            <button type="reset" class="px-5 py-2 bg-red-600 rounded ml-4 font-normal text-white">Hủy</button>
         </div>
     </div>
     <div class="w-1/4 flex flex-col items-center">

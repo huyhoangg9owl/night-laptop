@@ -1,29 +1,22 @@
 <?php
-global $name_carousel;
+$carousel = $carousel ?? [];
+$name_carousel = $name_carousel ?? "";
 $default_carousel_config = [
     "indicators" => true,
     "controls" => true,
     "items_model" => null,
     "carousel_css" => ""
 ];
+
 $carousel_config = array_merge($default_carousel_config, $carousel_config ?? []);
 ?>
 
-<section data-name="<?= $name_carousel ?>-carousel"
-         class="w-full relative overflow-hidden rounded-md select-none group/<?= $name_carousel ?>">
-    <button data-name="action-prev"
-            class="group-hover/<?= $name_carousel ?>:opacity-100 opacity-0 transition-all absolute z-50 top-1/2 -translate-y-1/2 left-5 bg-zinc-600/40 w-10 h-20 rounded-lg ease-linear active:scale-[85%]">
-        <?php
-        if ($carousel_config["controls"]) {
-            $name_icon = "prev_arrow";
-            $class_icon = "m-auto fill-white";
-            require ROOT_PATH . "/components/icons/index.php";
-        }
-        ?>
+<section data-name="<?= $name_carousel ?>-carousel" class="group/<?= $name_carousel ?> relative w-full select-none overflow-hidden rounded-md">
+    <button data-name="action-prev" class="group-hover/<?= $name_carousel ?>:opacity-100 absolute left-5 top-1/2 z-50 h-20 w-10 -translate-y-1/2 rounded-lg bg-zinc-600/40 opacity-0 transition-all ease-linear active:scale-[85%]">
+        <?php if ($carousel_config["controls"]) Icon("prev_arrow", "m-auto fill-white"); ?>
     </button>
-    <div class="relative rounded-xl overflow-hidden">
-        <div data-name="carousel-items"
-             class="w-fit h-full grid grid-cols-[repeat(<?= count($carousel) ?>,1fr)] whitespace-nowrap transition-transform duration-200 <?= $carousel_config["carousel_css"] ?>">
+    <div class="relative overflow-hidden">
+        <div data-name="carousel-items" class="grid-cols-[repeat(<?= count($carousel) ?>,1fr)] <?= $carousel_config['carousel_css'] ?> grid h-full w-fit whitespace-nowrap transition-transform duration-200">
             <?php
             foreach ($carousel as $key => $value) {
                 if ($carousel_config["items_model"]) {
@@ -38,29 +31,20 @@ $carousel_config = array_merge($default_carousel_config, $carousel_config ?? [])
     </div>
     <?php
     if ($carousel_config["indicators"]) {
-        ?>
-        <ul class="absolute bottom-2 left-1/2 -translate-x-1/2 z-50">
+    ?>
+        <ul class="absolute bottom-2 left-1/2 z-50 -translate-x-1/2">
             <?php
             foreach ($carousel as $key => $value) {
-                ?>
-                <li data-name="carousel-indicator"
-                    class="w-8 h-1 bg-white/40 rounded-full inline-block mx-1 cursor-pointer transition-colors duration-700"
-                    data-index="<?= $key ?>"></li>
-                <?php
+            ?>
+                <li data-name="carousel-indicator" class="mx-1 inline-block h-1 w-8 cursor-pointer rounded-full bg-white/40 transition-colors duration-700" data-index="<?= $key ?>"></li>
+            <?php
             }
             ?>
         </ul>
-        <?php
+    <?php
     }
     ?>
-    <button data-name="action-next"
-            class="group-hover/<?= $name_carousel ?>:opacity-100 opacity-0 transition-all absolute z-50 top-1/2 -translate-y-1/2 right-5 bg-zinc-600/40 w-10 h-20 rounded-lg ease-linear active:scale-[85%]">
-        <?php
-        if ($carousel_config["controls"]) {
-            $name_icon = "next_arrow";
-            $class_icon = "m-auto fill-white";
-            require ROOT_PATH . "/components/icons/index.php";
-        }
-        ?>
+    <button data-name="action-next" class="group-hover/<?= $name_carousel ?>:opacity-100 absolute right-5 top-1/2 z-50 h-20 w-10 -translate-y-1/2 rounded-lg bg-zinc-600/40 opacity-0 transition-all ease-linear active:scale-[85%]">
+        <?php if ($carousel_config["controls"]) Icon("next_arrow", "m-auto fill-white"); ?>
     </button>
 </section>

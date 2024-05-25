@@ -1,7 +1,4 @@
 <?php
-global $account;
-global $account_profile;
-global $account_payment;
 $path_url = $_SERVER["REQUEST_URI"];
 
 $url_aside = [
@@ -45,7 +42,6 @@ $layout_article = [
     </aside>
     <article class="w-full h-full">
         <?php
-        global $account;
         require_once ROOT_PATH . "/layouts/account/UI" . $layout_article[$path_url];
         ?>
     </article>

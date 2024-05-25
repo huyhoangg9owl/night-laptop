@@ -4,7 +4,8 @@
         <a href="/products/news" class="text-sky-500 underline">Tất cả</a>
     </article>
     <?php
-    $carousel = [];
+    $conn->query("SELECT * FROM product ORDER BY created_at DESC LIMIT 10");
+    $carousel = $conn->fetch_all();
     $name_carousel = 'news-product';
     $carousel_config = [
         "indicators" => false,

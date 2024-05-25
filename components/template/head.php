@@ -1,7 +1,3 @@
-<?php
-global $seo_setting;
-?>
-
 <head>
     <!-- META TAG -->
     <meta charset="UTF-8">

@@ -1,7 +1,7 @@
 <?php
 
-require_once "../../lib/php/config.php";
-require_once ROOT_PATH . "/utils/account.php";
+require_once "../../config/config.php";
+require_once ROOT_PATH . "/utils/Account.php";
 require_once ROOT_PATH . "/utils/UploadFile.php";
 
 global $conn;
@@ -9,6 +9,7 @@ global $conn;
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $avatar = $_FILES["avatar"];
     $account = new Account();
+
     $avatar_path = Avatar($avatar, $account, $conn);
     Account($account, $conn);
     if ($avatar_path) AccountProfile($avatar_path, $account, $conn);
@@ -60,7 +61,6 @@ function Account($account, $conn): void
             setcookie("auth_token", "", time() - 3600, "/");
         }
     }
-
 }
 
 function AccountProfile($avatar_path, $account, $conn): void

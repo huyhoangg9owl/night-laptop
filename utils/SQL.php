@@ -27,7 +27,7 @@ class SQL
         }
     }
 
-    public function query($sql, $params = []): false|mysqli_result
+    public function query($sql, array $params = []): false|mysqli_result
     {
         if (empty($sql)) {
             echo "Query is empty";
@@ -73,18 +73,28 @@ class SQL
         return $this->result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function error(): string
+    public function affected_rows(): int
     {
-        return $this->error;
+        return $this->conn->affected_rows;
     }
 
-    public function __destruct()
+    public function insertId(): int
     {
-        $this->close();
+        return $this->conn->insert_id;
+    }
+
+    public function error(): string|null
+    {
+        return $this->error;
     }
 
     public function close(): void
     {
         $this->conn->close();
+    }
+
+    public function __destruct()
+    {
+        $this->close();
     }
 }

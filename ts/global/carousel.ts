@@ -33,7 +33,7 @@ export default class Carousel {
 	currentItem: number;
 	intervalFunction: null | number;
 
-	constructor(carouselElement: Element, options?: OptionsCustom, afterChangedSlideFunc = () => {}) {
+    constructor(carouselElement: Element, options?: OptionsCustom, afterChangedSlideFunc = () => { }) {
 		this.carouselElement = carouselElement;
 
 		this.carouselItem = carouselElement.querySelector('[data-name="carousel-items"]') as HTMLElement;
@@ -71,10 +71,8 @@ export default class Carousel {
 			this.carouselPrevButton.addEventListener('click', () => this.prev());
 			this.carouselNextButton.addEventListener('click', () => this.next());
 		}
-		document.addEventListener('resize', ({ target }) => {
-			if (target) {
-				this.changeCSS(this.currentItem);
-			}
+        document.addEventListener('resize', ({ target }) => {
+			if (target) this.changeCSS(this.currentItem);
 		});
 	}
 
@@ -83,7 +81,8 @@ export default class Carousel {
 		if (breakpoint) {
 			const { innerWidth } = window;
 			breakpoint.forEach(({ screen, itemPerSlide }) => {
-				if (innerWidth <= screen) {
+                if (innerWidth <= screen) {
+                    this.options.itemPerSlide = itemPerSlide;
 					this.resizeItems(itemPerSlide);
 				} else {
 					this.resizeItems();
@@ -96,33 +95,32 @@ export default class Carousel {
 
 	resizeItems(itemPerSlide = this.options.itemPerSlide) {
 		const { clientWidth: parentWidth } = this.carouselElement;
-		const { gap } = this.options;
+        const { gap } = this.options;
+        
 		this.carouselItems.forEach((item, index) => {
 			item.style.width = `${parentWidth / itemPerSlide - gap + gap / itemPerSlide}px`;
 			item.style.marginRight = `${gap}px`;
-			if (
-				this.carouselItemsLength - 1 - itemPerSlide + this.currentItem === index ||
-				(this.currentItem > 0 && index <= this.currentItem - 1)
-			) {
-				item.style.marginRight = '0';
-			}
+            
+            if (
+                index <= this.currentItem - 1 || (index + 1) % itemPerSlide === 0
+			) item.style.marginRight = '0';
 		});
 	}
 
 	prev() {
-		this.currentItem =
+        this.currentItem =
 			this.currentItem === 0 ? this.carouselItemsLength - this.options.itemPerSlide : this.currentItem - 1;
 		this.updateCarousel();
 	}
 
-	next() {
-		this.currentItem =
-			this.currentItem >= this.carouselItemsLength - this.options.itemPerSlide ? 0 : this.currentItem + 1;
+    next() {
+        this.currentItem =
+            this.currentItem >= this.carouselItemsLength - this.options.itemPerSlide ? 0 : this.currentItem + 1;
 		this.updateCarousel();
 	}
 
 	changeCSS(next: number) {
-		const classes = this.carouselItem.classList;
+        const classes = this.carouselItem.classList;
 		classes.forEach((className) => className.includes('translate-x-') && classes.remove(className));
 		const { clientWidth } = this.carouselItems[0];
 		if (next) this.carouselItem.classList.add(`translate-x-[-${clientWidth * next}px]`);

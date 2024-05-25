@@ -18,7 +18,23 @@ tailwind.config = {
 						opacity: '1',
 						transform: 'translateY(0)',
 					},
-				},
+                },
+                opacityIn: {
+                    '0%': {
+                        opacity: 0,
+                    },
+                    '100%': {
+                        opacity: 1,
+                    },
+                },
+                opacityOut: {
+                    '0%': {
+                        opacity: 1,
+                    },
+                    '100%': {
+                        opacity: 0,
+                    },
+                },
 			},
 			gridTemplateRows: {
 				'auto-35px': 'repeat(auto-fit, 35px)',

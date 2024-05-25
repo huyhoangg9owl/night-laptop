@@ -35,22 +35,19 @@ $seo_setting = $conn->fetch_once();
     <link rel="stylesheet" href="https://kit-pro.fontawesome.com/releases/v5.12.1/css/pro.min.css" />
     <!-- LINK TAG -->
     <title>
-        <?= $seo_setting["title"] . " Admin" . (isset($subtitle) ? " | " . $subtitle : "") ?>
+        <?= (isset($subtitle) ?  $subtitle . " | " : "") . $seo_setting["title"] . " Admin" ?>
     </title>
 </head>
 
-<body class="w-full h-full min-h-dvh bg-slate-200 dark:bg-zinc-700 relative dark:text-white transition-colors duration-300 be-vietnam-pro-light grid grid-cols-[5rem_1fr]">
-    <?php
-    require_once ROOT_PATH . '/components/template/admin/navbar.php';
-    ?>
-    <main class="w-full h-full px-16 py-8">
-        <?php
-        require_once $body_component;
-        ?>
+<body class="w-full h-dvh bg-[#E9E9E9] relative transition-colors duration-300 be-vietnam-pro-light">
+    <main class="w-full h-full relative p-10">
+        <div class="w-full h-full flex flex-row bg-[#F3F1EC] rounded-l-3xl shadow-sm">
+            <?php require_once __DIR__ . '/aside.php'; ?>
+            <section class="w-full h-full p-6 overflow-y-auto">
+                <?php require_once $body_component; ?>
+            </section>
+        </div>
     </main>
-    <?php
-    require_once ROOT_PATH . '/components/template/admin/footer.php';
-    ?>
 </body>
 
 </html>

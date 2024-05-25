@@ -1,13 +1,13 @@
 <?php
 
-use JetBrains\PhpStorm\NoReturn;
+require_once "../../config/config.php";
 
-require_once "../../lib/php/config.php";
+global $conn;
 
 session_start();
 session_unset();
 
-#[NoReturn] function end_and_close(): void
+function end_and_close(): void
 {
     header('Location: /auth?t=1');
     session_write_close();
@@ -20,8 +20,6 @@ $email = $_POST['email'] ?? '';
 $password = $_POST['password'] ?? '';
 $repassword = $_POST['repassword'] ?? '';
 
-
-$conn = $GLOBALS['conn'];
 
 $_SESSION['username'] = $username;
 $_SESSION['email'] = $email;
@@ -70,6 +68,7 @@ if (empty($_SESSION['errors_code'])) {
 
         $conn->query($sqlAccountPayment);
         $conn->query($sqlAccountProfile);
+        session_unset();
         header("Location: /auth");
     } catch (Throwable $th) {
         $_SESSION['errors_code'][] = "sql_exception";

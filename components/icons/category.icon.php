@@ -1,8 +1,3 @@
-<?php
-$class_icon = $class_icon ?? "";
-?>
-
-
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" class="<?= $class_icon ?>">
-    <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2ZM7.286 7.286h9.428M7.286 12h9.428m-9.428 4.286h9.428" />
+<svg viewBox="0 0 24 24" fill="currentColor" height="<?= $height ?>" width="<?= $width ?>" class="<?= $class ?>">
+    <path d="M4 11h6a1 1 0 001-1V4a1 1 0 00-1-1H4a1 1 0 00-1 1v6a1 1 0 001 1zm10 0h6a1 1 0 001-1V4a1 1 0 00-1-1h-6a1 1 0 00-1 1v6a1 1 0 001 1zM4 21h6a1 1 0 001-1v-6a1 1 0 00-1-1H4a1 1 0 00-1 1v6a1 1 0 001 1zm13 0c2.206 0 4-1.794 4-4s-1.794-4-4-4-4 1.794-4 4 1.794 4 4 4z" />
 </svg>
