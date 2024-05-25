@@ -1,5 +1,5 @@
 <?php
-require_once ROOT_PATH . "/lib/php/config.php";
+require_once ROOT_PATH . "/config/config.php";
 
 class Account
 {
