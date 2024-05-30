@@ -106,6 +106,45 @@ class Product
         return null;
     }
 
+    public function getQuantity(int $product_id): int
+    {
+        global $conn;
+        $result = $conn->query("SELECT quantity FROM product WHERE id = ?", [$product_id]);
+        if ($result) {
+            return $result->fetch_assoc()['quantity'];
+        }
+        return 0;
+    }
+
+    public function getQuantityAvailable(int $product_id): int
+    {
+        global $conn;
+        $conn->query("SELECT SUM(quantity) AS quantity FROM cart WHERE product_id = ?", [$product_id]);
+        if ($conn->num_rows() > 0) {
+            $cart = $conn->fetch_once();
+            return $this->getQuantity($product_id) - $cart['quantity'];
+        }
+        return 0;
+    }
+
+    public function getReviews(int $product_id): array
+    {
+        global $conn;
+        $result = $conn->query("SELECT * FROM product_review WHERE product_id = ? ORDER BY updated_at DESC", [$product_id]);
+        if ($result) {
+            return $result->fetch_all(MYSQLI_ASSOC);
+        }
+        return [];
+    }
+
+    public function createReview(int $account_id, int $product_id, string $review, int $star): bool
+    {
+        global $conn;
+        $conn->query("INSERT INTO product_review (account_id, product_id, review, star) VALUES (?, ?, ?, ?)", [$account_id, $product_id, $review, $star]);
+        if ($conn->affected_rows()) return true;
+        return false;
+    }
+
     public function getError(): mixed
     {
         if (isset($this->error)) return $this->error;

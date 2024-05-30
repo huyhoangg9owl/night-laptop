@@ -1,10 +1,9 @@
-<section class="w-full my-8">
-    <article class="w-full flex items-end justify-between">
-        <h1 class="text-2xl font-bold">Sản phẩm mới</h1>
-        <a href="/products/news" class="text-sky-500 underline">Tất cả</a>
+<section class="my-8 w-full">
+    <article class="w-full text-2xl font-bold">
+        Sản phẩm mới
     </article>
     <?php
-    $conn->query("SELECT * FROM product ORDER BY created_at DESC LIMIT 10");
+    $conn->query("SELECT product.* FROM product INNER JOIN category ON product.category_id = category.id WHERE category.status = 1 GROUP BY product.id ORDER BY created_at DESC LIMIT 10");
     $carousel = $conn->fetch_all();
     $name_carousel = 'news-product';
     $carousel_config = [

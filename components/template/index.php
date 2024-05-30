@@ -14,9 +14,9 @@ $seo_setting = $conn->fetch_once();
 if (isset($account)) {
     global $account;
 } else {
-    $account = new Account();
-    $account_profile = $account->getAccountProfile();
-    $account = $account->getAccount();
+    $Account = new Account();
+    $account_profile = $Account->getAccountProfile();
+    $account = $Account->getAccount();
 }
 
 $categories = new Category();

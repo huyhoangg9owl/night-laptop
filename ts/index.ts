@@ -1,6 +1,7 @@
 import Admin from './admin/index';
 import Global from './global/index';
 import Home from './pages/home';
+import Product from './pages/product';
 
 function main() {
     const HTML = document.querySelector('html');
@@ -8,6 +9,7 @@ function main() {
         Global();
         RunInSite(null, Home);
         RunInSite('admin', Admin);
+        RunInSite('product', Product);
     }
 }
 

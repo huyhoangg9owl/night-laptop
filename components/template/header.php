@@ -5,10 +5,12 @@
                 <span class="text-sky-400">9</span><span class="card text-zinc-500 dark:text-white">LapTop</span>
             </h1>
         </a>
-        <form action="/search" method="get" class="hidden w-1/2 rounded border border-gray-200 p-2 pl-6 md:block dark:border-gray-400/80">
-            <label>
-                <input type="search" name="q" class="w-full border-none bg-transparent text-gray-600 focus:outline-none dark:text-white" placeholder="Tìm kiếm sản phẩm..." />
+        <form action="/search" method="get" class="w-1/2 rounded border border-gray-200 p-2 pl-6 md:block dark:border-gray-400/80 relative">
+            <label class="peer">
+                <input type="search" name="q" class="w-full border-none bg-transparent text-gray-600 focus:outline-none dark:text-white" placeholder="Tìm kiếm sản phẩm..." id="search" />
             </label>
+            <ul class="absolute bottom-0 left-0 right-0 translate-y-full w-full min-h-40 max-h-96 overflow-y-auto bg-white rounded-b-md hidden shadow-lg" id="search_result">
+            </ul>
         </form>
         <ul class="grid grid-cols-4 grid-rows-1 place-items-center gap-5 md:grid-cols-3">
             <li class="flex justify-center md:hidden">
@@ -24,7 +26,12 @@
             <li class="flex justify-center">
                 <a href="/account/cart" class="relative">
                     <?php Icon("cart", "text-gray-600 dark:text-white") ?>
-                    <span class="absolute -right-2 -top-1 size-2 rounded-full bg-red-500"></span>
+                    <?php
+                    $cart = $Account->Cart();
+                    if ($cart) :
+                    ?>
+                        <span class="absolute -right-2 -top-1 size-2 rounded-full bg-red-500"></span>
+                    <?php endif; ?>
                 </a>
             </li>
             <li class="flex justify-center">
@@ -52,6 +59,43 @@
         </ul>
     </div>
 </header>
+
+<script>
+    const search = document.getElementById('search');
+    const search_result = document.getElementById('search_result');
+
+    search.addEventListener('input', async function() {
+        const response = await fetch(`/search?q=${search.value}`, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const products = await response.json();
+
+        if (products.length === 0) {
+            search_result.classList.add('hidden');
+            return;
+        }
+
+        search_result.classList.remove('hidden');
+
+
+        search_result.innerHTML = products.map(product => {
+            const desc = new DOMParser().parseFromString(product.description, 'text/html').body.textContent;
+            return `
+            <li>
+                <a href="/product/${product.id}" class="flex items-center justify-between hover:bg-gray-200 border-b border-b-gray-200 p-4">
+                    <img class="h-12 w-12" src="${product.image_url ?? "/public/favicon.ico"}" alt="Product image" />
+                    <div class="flex-1 ml-4">
+                        <h3 class="text-lg font-semibold">${product.name}</h3>
+                        <div class="text-gray-500 line-clamp-1">${desc}</div>
+                    </div>
+                </a>
+            </li>
+        `
+        }).join('');
+    });
+</script>
 
 <?php
 $no_nav = $no_nav ?? false;

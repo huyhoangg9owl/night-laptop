@@ -27,7 +27,7 @@ $image = $conn->fetch_once();
                 <?= $value['name'] ?>
             </h2>
             <p class="text-lg font-semibold">
-                <?= "$" . ($value['price']) ?>
+                <?= number_format($value['price'], 0, "", ",") ?> đ
             </p>
         </div>
     </div>

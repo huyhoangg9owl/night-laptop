@@ -11,7 +11,7 @@ echo $error ? "<p class='text-red-500'>$error</p>" : '';
 
 <h1 class="font-normal text-3xl text-gray-600 be-vietnam-pro-black mb-8">Thêm sản phẩm</h1>
 
-<form class="w-full bg-white p-6 rounded-lg shadow-lg" method="post" action="/services/product/create" enctype="multipart/form-data">
+<form class="w-full bg-white p-6 rounded-lg shadow-lg" method="post" action="/services/admin/product/create" enctype="multipart/form-data">
     <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
             Tên sản phẩm
@@ -30,7 +30,7 @@ echo $error ? "<p class='text-red-500'>$error</p>" : '';
         <label class="block text-gray-700 text-sm font-bold mb-2" for="description">
             Mô tả sản phẩm
         </label>
-        <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" name="description" placeholder="Nhập mô tả sản phẩm" required><?= $description ?></textarea>
+        <textarea id="description" name="description" placeholder="Nhập mô tả sản phẩm"><?= $description ?></textarea>
     </div>
 
     <div class="mb-4">
@@ -84,4 +84,12 @@ echo $error ? "<p class='text-red-500'>$error</p>" : '';
         }
         reader.readAsDataURL(file);
     });
+    ClassicEditor
+        .create(document.querySelector('#description'))
+        .then(editor => {
+            console.log(editor);
+        })
+        .catch(error => {
+            console.error(error);
+        });
 </script>

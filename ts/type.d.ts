@@ -11,3 +11,7 @@ declare class Chart {
 declare var globals: {
 	[key: string]: any;
 };
+
+declare class ClassicEditor {
+    static create: any;
+}

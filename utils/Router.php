@@ -69,7 +69,8 @@ class Router
                 }
             }
         }
-        if (is_dir($path)) $path = $path . "/index.php";
+        if (is_dir("/" . $path)) $path .= "/index.php";
+        if (!file_exists($path)) $path = ROOT_PATH . "/pages/not-found.php";
         return $path;
     }
 

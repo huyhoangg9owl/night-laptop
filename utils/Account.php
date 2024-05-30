@@ -1,13 +1,16 @@
 <?php
 require_once ROOT_PATH . "/config/config.php";
+require_once ROOT_PATH . "/utils/Product.php";
 
 class Account
 {
     protected string|null $token;
     protected array|null $account = null;
+    protected $product;
 
     public function __construct($account = null)
     {
+        $this->product = new Product();
         if (isset($account)) $this->account = $account;
         if (isset($_COOKIE['auth_token'])) $this->token = $this->getToken();
     }
@@ -119,6 +122,65 @@ class Account
             $conn->query("DELETE FROM account_payment_info WHERE account_id = ?", [$id]);
             $conn->query("DELETE FROM account WHERE id = ?", [$id]);
         } catch (\Throwable $th) {
+        }
+    }
+
+    public function Cart(): array|null
+    {
+        global $conn;
+        if ($this->checkToken()) {
+            $account_id = $this->getAccountID();
+            $result = $conn->query("SELECT cart.*, MAX(product_image.image_url) AS image_url FROM cart LEFT JOIN product_image ON cart.product_id = product_image.product_id WHERE cart.account_id = ? GROUP BY cart.id", [$account_id]);
+            if ($result) return $conn->fetch_all();
+            return null;
+        }
+        return null;
+    }
+
+    public function addToCart(int $product_id, int $quantity = 1): void
+    {
+        global $conn;
+        $account_id = $this->getAccountID();
+        $conn->query("SELECT * FROM cart WHERE account_id = ? AND product_id = ?", [$account_id, $product_id]);
+
+        if ($conn->num_rows() > 0) {
+            $cart = $conn->fetch_once();
+            if ($quantity < 1) {
+                $conn->query("DELETE FROM cart WHERE account_id = ? AND product_id = ?", [$account_id, $product_id]);
+            } else {
+                $quantity += $cart['quantity'];
+                $quantity_available = $this->product->getQuantity($product_id);
+
+                if ($quantity > $quantity_available) $quantity = $quantity_available;
+                $this->updateCart($product_id, $quantity);
+            };
+        } else {
+            $quantity_available = $this->product->getQuantity($product_id);
+
+            if ($quantity > $quantity_available) $quantity = $quantity_available;
+            $conn->query("INSERT INTO cart (account_id, product_id, quantity) VALUES (?, ?, ?)", [$account_id, $product_id, $quantity]);
+        }
+    }
+
+    public function updateCart(int $product_id, int $quantity): void
+    {
+        global $conn;
+
+        if (!isset($account_id)) {
+            $account_id = $this->getAccountID();
+        };
+
+        if ($quantity < 1) {
+            $conn->query("DELETE FROM cart WHERE account_id = ? AND product_id = ?", [$account_id, $product_id]);
+        } else {
+            $conn->query("SELECT * FROM cart WHERE account_id = ? AND product_id = ?", [$account_id, $product_id]);
+            if ($conn->num_rows() < 1) {
+                $this->addToCart($product_id, $quantity);
+            }
+            $quantity_available = $this->product->getQuantity($product_id);
+            if ($quantity > $quantity_available) $quantity = $quantity_available;
+
+            $conn->query("UPDATE cart SET quantity = ? WHERE account_id = ? AND product_id = ?", [$quantity, $account_id, $product_id]);
         }
     }
 }

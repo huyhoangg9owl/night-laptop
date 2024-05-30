@@ -4,10 +4,14 @@ require_once ROOT_PATH . "/config/config.php";
 class Category
 {
     public mixed $error;
-    public function getCategories(): array
+    public function getCategories(bool $needStatus = true): array
     {
         global $conn;
-        $result = $conn->query("SELECT * FROM category");
+        if ($needStatus) {
+            $result = $conn->query("SELECT * FROM category WHERE status = 1");
+        } else {
+            $result = $conn->query("SELECT * FROM category");
+        }
         if ($result) {
             return $result->fetch_all(MYSQLI_ASSOC);
         }

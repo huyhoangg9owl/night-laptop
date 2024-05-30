@@ -22,6 +22,7 @@ $seo_setting = $conn->fetch_once();
     <script src="/lib/js/chartjs-plugin-datalabels.js"></script>
     <script src="/lib/js/jquery_migrate.js"></script>
     <script src="/lib/js/tailwind.js"></script>
+    <script src="/lib/js/ckeditor.js"></script>
     <script src="/config/tailwind.config.js"></script>
     <script src="/js/index.js" type="module"></script>
     <!-- SCRIPT TAG -->

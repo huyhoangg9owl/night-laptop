@@ -1,4 +1,4 @@
-<form action="/services/product/toggle_status" method="get">
+<form action="/services/admin/product/toggle_status" method="get">
     <h1 class="font-normal text-3xl text-gray-600 be-vietnam-pro-black">Sản phẩm</h1>
     <a href="/admin/product/create" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-4 flex flex-row items-center justify-center w-fit">
         <?php
@@ -47,7 +47,7 @@
                         <td class="border border-gray-300 px-4 py-2">
                             <div class="flex flex-row items-center justify-center gap-4">
                                 <a href="/admin/product/edit/<?= $product['id'] ?>" class="text-blue-500 hover:font-semibold">Sửa</a>
-                                <a href="/services/product/delete?id=<?= $product['id'] ?>" class="text-red-500 hover:font-semibold">Xóa</a>
+                                <a href="/services/admin/product/delete?id=<?= $product['id'] ?>" class="text-red-500 hover:font-semibold">Xóa</a>
                             </div>
                         </td>
                     </tr>

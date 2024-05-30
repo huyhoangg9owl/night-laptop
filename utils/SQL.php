@@ -78,6 +78,11 @@ class SQL
         return $this->conn->affected_rows;
     }
 
+    public function num_rows(): int
+    {
+        return $this->result->num_rows;
+    }
+
     public function insertId(): int
     {
         return $this->conn->insert_id;

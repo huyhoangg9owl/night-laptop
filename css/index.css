@@ -106,3 +106,31 @@ input[type='number']::-webkit-inner-spin-button,
 input[type='number']::-webkit-outer-spin-button {
 	-webkit-appearance: none;
 }
+
+div.ck h1 {
+    font-size: 1.875rem;
+}
+
+div.ck h2 {
+    font-size: 1.5rem;
+}
+
+div.ck h3 {
+    font-size: 1.25rem;
+}
+
+div.ck ul, div.ck ol {
+    padding-left: 1.5rem;
+}
+
+div.ck ul li {
+    list-style-type: disc;
+}
+
+div.ck ol li {
+    list-style-type: decimal;
+}
+
+div.ck a {
+    color: #3182ce;
+}

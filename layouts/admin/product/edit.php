@@ -5,7 +5,7 @@ echo $error ? "<p class='text-red-500'>$error</p>" : '';
 
 <h1 class="font-normal text-3xl text-gray-600 be-vietnam-pro-black mb-8">Sửa sản phẩm</h1>
 
-<form class="w-full bg-white p-6 rounded-lg shadow-lg" method="post" action="/services/product/update" enctype="multipart/form-data">
+<form class="w-full bg-white p-6 rounded-lg shadow-lg" method="post" action="/services/admin/product/update" enctype="multipart/form-data">
     <input type="hidden" name="id" value="<?= $product['id'] ?>">
     <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
@@ -79,4 +79,12 @@ echo $error ? "<p class='text-red-500'>$error</p>" : '';
         }
         reader.readAsDataURL(file);
     });
+    ClassicEditor
+        .create(document.querySelector('#description'))
+        .then(editor => {
+            console.log(editor);
+        })
+        .catch(error => {
+            console.error(error);
+        });
 </script>

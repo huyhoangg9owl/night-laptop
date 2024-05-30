@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 session_start();
 session_unset();
 
-require_once "../../config/config.php";
+require_once "../../../config/config.php";
 require_once ROOT_PATH . "/utils/Product.php";
 
 $product = new Product();
