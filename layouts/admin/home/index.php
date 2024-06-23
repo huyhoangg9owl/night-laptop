@@ -82,7 +82,7 @@ function PercentColor($percent)
 <h1 class="font-normal text-3xl text-gray-600 be-vietnam-pro-black">Trang chủ</h1>
 
 <?php
-require_once ROOT_PATH . '/layouts/admin/home/chart/index.php';
+// require_once ROOT_PATH . '/layouts/admin/home/chart/index.php';
 require_once ROOT_PATH . '/layouts/admin/home/best_seller/index.php';
 require_once ROOT_PATH . '/layouts/admin/home/last_orders.php';
 ?>

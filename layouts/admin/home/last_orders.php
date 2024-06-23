@@ -1,72 +1,3 @@
-<?php
-for ($i = 0; $i < 100; $i++) {
-    $order = [
-        'order_id' => 'DH' . str_pad($i + 1, 3, '0', STR_PAD_LEFT),
-        'customer_name' => generateRandomName(),
-        'order_product' => generateRandomProduct(),
-        'order_date' => generateRandomDate(),
-        'order_status' => generateRandomStatus(),
-        'order_total' => generateRandomTotal()
-    ];
-    $orders[] = $order;
-}
-
-function generateRandomName()
-{
-    $names = ['John Doe', 'Jane Smith', 'Michael Johnson', 'Emily Davis'];
-    return $names[array_rand($names)];
-}
-
-function generateRandomAvatar()
-{
-    $avatars = [
-        'https://via.placeholder.com/150',
-        'https://via.placeholder.com/150',
-        'https://via.placeholder.com/150',
-        'https://via.placeholder.com/150'
-    ];
-    return $avatars[array_rand($avatars)];
-}
-
-function generateRandomProduct()
-{
-    $products = ['iPhone 13', 'Samsung Galaxy S21', 'Google Pixel 6', 'OnePlus 9'];
-    return $products[array_rand($products)];
-}
-
-function generateRandomImage()
-{
-    $images = [
-        'https://via.placeholder.com/150',
-        'https://via.placeholder.com/150',
-        'https://via.placeholder.com/150',
-        'https://via.placeholder.com/150'
-    ];
-    return $images[array_rand($images)];
-}
-
-function generateRandomDate()
-{
-    $startDate = strtotime('2021-01-01');
-    $endDate = strtotime('2021-12-31');
-    $randomTimestamp = mt_rand($startDate, $endDate);
-    return date('Y-m-d', $randomTimestamp);
-}
-
-function generateRandomStatus()
-{
-    $statuses = ['Đã giao hàng', 'Đang vận chuyển', 'Chưa giao hàng'];
-    return $statuses[array_rand($statuses)];
-}
-
-function generateRandomTotal()
-{
-    return rand(100000, 1000000);
-}
-
-$orders = array_slice($orders, 0, 10);
-?>
-
 <div class="w-full overflow-x-auto shadow-md mt-8 rounded-xl">
     <table class="w-full border-separate divide-y divide-gray-200 dark:divide-gray-700">
         <thead class="bg-gray-50 dark:bg-gray-800">
@@ -89,10 +20,10 @@ $orders = array_slice($orders, 0, 10);
                     Ngày đặt hàng
                 </th>
                 <th scope="col" class="whitespace-nowrap py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 text-center">
-                    Trạng thái
+                    Tổng tiền
                 </th>
                 <th scope="col" class="whitespace-nowrap py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 text-center">
-                    Tổng tiền
+                    Trạng thái
                 </th>
             </tr>
         </thead>
@@ -100,22 +31,41 @@ $orders = array_slice($orders, 0, 10);
             <?php foreach ($orders as $order) : ?>
                 <tr>
                     <td class="whitespace-nowrap px-12 py-4 text-sm font-normal text-dark dark:text-white text-center">
-                        <?= $order['order_id'] ?>
+                        <?= $order['id'] ?>
                     </td>
                     <td class="whitespace-nowrap px-12 py-4 text-sm font-normal text-dark dark:text-white">
-                        <?= $order['customer_name'] ?>
+                        <?= $order['name_reciver'] ?>
                     </td>
                     <td class="whitespace-nowrap px-12 py-4 text-sm font-normal text-dark dark:text-white">
-                        <?= $order['order_product'] ?>
+                        <?= $order['name'] ?>
                     </td>
                     <td class="whitespace-nowrap px-12 py-4 text-sm font-normal text-dark dark:text-white text-center">
-                        <?= $order['order_date'] ?>
+                        <?= $order['created_at'] ?>
                     </td>
                     <td class="whitespace-nowrap px-12 py-4 text-sm font-normal text-dark dark:text-white text-center">
-                        <?= $order['order_status'] ?>
+                        <?= number_format($order['total']) ?> đ
                     </td>
                     <td class="whitespace-nowrap px-12 py-4 text-sm font-normal text-dark dark:text-white text-center">
-                        <?= number_format($order['order_total']) ?>
+                        <?php switch ($order['status']):
+                            case 0: ?>
+                                <span class="text-red-500">Đã hủy</span>
+                                <?php break; ?>
+                            <?php
+                            case 1: ?>
+                                <span class="text-yellow-500">Đang chờ xử lý</span>
+                                <?php break; ?>
+                            <?php
+                            case 2: ?>
+                                <span class="text-blue-500">Đang giao hàng</span>
+                                <?php break; ?>
+                            <?php
+                            case 3: ?>
+                                <span class="text-green-500">Đã giao hàng</span>
+                                <?php break; ?>
+                            <?php
+                            default: ?>
+                                <span class="text-red-500">Đã hủy</span>
+                        <?php endswitch; ?>
                     </td>
                 </tr>
             <?php endforeach; ?>

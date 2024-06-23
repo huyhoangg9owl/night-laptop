@@ -4,21 +4,21 @@ import Home from './pages/home';
 import Product from './pages/product';
 
 function main() {
-    const HTML = document.querySelector('html');
-    if (HTML) {
-        Global();
-        RunInSite(null, Home);
-        RunInSite('admin', Admin);
-        RunInSite('product', Product);
-    }
+	const HTML = document.querySelector('html');
+	if (HTML) {
+		Global(['checkout']);
+		RunInSite('/', Home);
+		RunInSite('admin', Admin);
+		RunInSite('product', Product);
+	}
 }
 
-function RunInSite(site: string | null, func: Function) {
-    if (site === null && window.location.pathname === '/') {
-        func();
-        return;
-    }
-    if (window.location.pathname.includes(site)) func();
+function RunInSite(site: string, func: Function) {
+	if (site === '/' && window.location.pathname === '/') {
+		func();
+		return;
+	}
+	if (window.location.pathname.includes(site)) func();
 }
 
 document.addEventListener('DOMContentLoaded', main);

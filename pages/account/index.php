@@ -13,5 +13,5 @@ if (!$account) {
     $body_component = ROOT_PATH . '/layouts/account/index.php';
     $no_nav = true;
     $subtitle = 'Tài khoản';
-    require_once ROOT_PATH . '/components/template/index.php';
+    require_once ROOT_PATH . '/components/template/global/index.php';
 }

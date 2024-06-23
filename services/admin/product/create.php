@@ -14,7 +14,7 @@ require_once ROOT_PATH . "/utils/UploadFile.php";
 $product = new Product();
 $category = new Category();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
     $price = $_POST['price'];
     $description = $_POST['description'];
@@ -57,15 +57,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 
-
-    $product_id = $product->createProduct($name, $price, $description, $quantity, $category_id, $status);
-
-    if (!$product_id) {
-        $_SESSION['error'] = $product->getError();
-        header("Location: /admin/product/create");
-        exit();
-    }
-
     $product_id = $conn->insertId();
     $upload_dir = ROOT_PATH . "/upload/product/" . hash("sha256", $name . $category_id);
     if ($thumbnail_image['error'] == 0) {
@@ -73,10 +64,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $upload->setUploadDir($upload_dir);
         $upload->setAllowedTypes(["image/png", "image/jpeg", "image/jpg"]);
         $upload->setMaxSize(2 * 1024 * 1024);
-        $upload->setFileName($thumbnail_image['name']);
+        $upload->setFileName(str_replace("." . pathinfo($thumbnail_image["name"], PATHINFO_EXTENSION), "", $thumbnail_image['name']));
         $path = $upload->getPath();
         try {
             $upload->upload(["width" => 750, "height" => 750]);
+
+            $product_id = $product->createProduct($name, $price, $description, $quantity, $category_id, $status);
+            if (!$product_id) {
+                $_SESSION['error'] = $product->getError();
+                header("Location: /admin/product/create");
+                exit();
+            }
+
             $conn->query("INSERT INTO product_image (product_id, image_url, is_thumbnail) VALUES (?, ?, ?)", [$product_id, $path, 1]);
         } catch (Exception $e) {
             $_SESSION['error'] = "Upload ảnh bìa thất bại: " . $e->getMessage();

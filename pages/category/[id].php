@@ -51,4 +51,4 @@ $conn->query("SELECT * FROM product WHERE category_id = ? ORDER BY created_at DE
 $products = $conn->fetch_all();
 
 $body_component = ROOT_PATH . '/layouts/category/index.php';
-require_once ROOT_PATH . '/components/template/index.php';
+require_once ROOT_PATH . '/components/template/global/index.php';

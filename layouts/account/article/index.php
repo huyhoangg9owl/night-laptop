@@ -30,21 +30,9 @@
         <div class="w-full mt-4 pl-4 flex flex-row gap-8">
             <p class="text-lg font-normal">Phương thức thanh toán (Mặc định)</p>
             <div class="flex flex-row gap-4 mt-2">
-                <div class="flex flex-row items-center justify-center gap-2" title="Chưa hỗ trợ!">
-                    <input type="radio" name="payment_method" id="payment_method_1" value="1" disabled>
-                    <label for="payment_method_1" class="text-sm font-normal">Visa</label>
-                </div>
-                <div class="flex flex-row items-center justify-center gap-2" title="Chưa hỗ trợ!">
-                    <input type="radio" name="payment_method" id="payment_method_2" value="2" disabled>
-                    <label for="payment_method_2" class="text-sm font-normal">MoMo</label>
-                </div>
-                <div class="flex flex-row items-center justify-center gap-2" title="Chưa hỗ trợ!">
-                    <input type="radio" name="payment_method" id="payment_method_3" value="3" disabled>
-                    <label for="payment_method_3" class="text-sm font-normal">Paypal</label>
-                </div>
                 <div class="flex flex-row items-center justify-center gap-2" title="Thanh toán sau khi nhận hàng.">
-                    <input type="radio" name="payment_method" id="payment_method_4" value="4" checked>
-                    <label for="payment_method_4" class="text-sm font-normal">Thanh toán khi nhận hàng</label>
+                    <input type="radio" name="payment_method" id="payment_method_2" value="2" <?= $account_payment['payment_type'] === 2 ? "checked" : "" ?>>
+                    <label for="payment_method_2" class="text-sm font-normal">Thanh toán khi nhận hàng</label>
                 </div>
             </div>
         </div>

@@ -24,12 +24,12 @@ $categories = $categories->getCategories();
 ?>
 <!DOCTYPE html>
 <html lang="en" class="light h-full">
-<?php require_once ROOT_PATH . '/components/template/head.php' ?>
+<?php require_once ROOT_PATH . '/components/template/global/head.php' ?>
 
 <body class="be-vietnam-pro-light relative h-full min-h-dvh w-full bg-slate-200 transition-colors duration-300 dark:bg-zinc-700 dark:text-white">
     <?php
     if (!isset($body_component)) global $body_component;
-    if (!$no_header) require_once ROOT_PATH . '/components/template/header.php';
+    if (!$no_header) require_once ROOT_PATH . '/components/template/global/header.php';
     require_once $body_component;
     ?>
     <button id="scroll-to-top" class="fixed bottom-4 right-4 hidden rounded-full bg-slate-300 p-2 shadow-md dark:bg-zinc-800">
@@ -38,7 +38,7 @@ $categories = $categories->getCategories();
         </svg>
     </button>
     <?php
-    if (!$no_footer) require_once 'components/template/footer.php';
+    if (!$no_footer) require_once 'components/template/global/footer.php';
     session_write_close();
     ?>
 </body>

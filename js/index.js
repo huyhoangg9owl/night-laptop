@@ -5,14 +5,14 @@ import Product from './pages/product';
 function main() {
     const HTML = document.querySelector('html');
     if (HTML) {
-        Global();
-        RunInSite(null, Home);
+        Global(['checkout']);
+        RunInSite('/', Home);
         RunInSite('admin', Admin);
         RunInSite('product', Product);
     }
 }
 function RunInSite(site, func) {
-    if (site === null && window.location.pathname === '/') {
+    if (site === '/' && window.location.pathname === '/') {
         func();
         return;
     }

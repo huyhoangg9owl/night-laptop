@@ -12,7 +12,7 @@ $layout_article = [
     "/account" => "/index.php",
     "/account/payment" => "/payment.php",
     "/account/cart" => "/cart/index.php",
-    "/account/order" => "/order.php",
+    "/account/order" => "/order/index.php",
     "/account/settings" => "/settings.php",
 ];
 ?>

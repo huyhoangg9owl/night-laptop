@@ -15,8 +15,6 @@
                 <?php
                 $index = 0;
                 foreach ($cart as $order) {
-                    $product = $Product->getProductById($order['product_id']);
-                    $category = $Product->getProductCategory($product['category_id']);
                     require ROOT_PATH . "/layouts/account/article/cart/list/item.php";
                     $index++;
                 }; ?>

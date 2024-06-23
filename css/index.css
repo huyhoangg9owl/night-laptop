@@ -25,20 +25,31 @@
 	--tw-text-opacity: 1;
 	color: rgb(54 57 90 / var(--tw-text-opacity));
 	text-decoration-line: none;
-	box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #d6d6e7 0 -3px 0 inset;
+	box-shadow:
+		rgba(45, 35, 66, 0.4) 0 2px 4px,
+		rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+		#d6d6e7 0 -3px 0 inset;
 	list-style: none;
-	transition: box-shadow 0.15s, transform 0.15s linear;
+	transition:
+		box-shadow 0.15s,
+		transform 0.15s linear;
 }
 
 .toggle-btn:hover {
 	--tw-translate-y: -2px;
 	transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x))
 		skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-	box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #d6d6e7 0 -3px 0 inset;
+	box-shadow:
+		rgba(45, 35, 66, 0.4) 0 4px 8px,
+		rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+		#d6d6e7 0 -3px 0 inset;
 }
 
 .toggle-btn:focus {
-	box-shadow: #d6d6e7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+	box-shadow:
+		#d6d6e7 0 0 0 1.5px inset,
+		rgba(45, 35, 66, 0.4) 0 2px 4px,
+		rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
 		#d6d6e7 0 -3px 0 inset;
 }
 
@@ -56,23 +67,35 @@ html.dark .toggle-btn {
 	background-color: rgb(71 85 105 / var(--tw-bg-opacity));
 	--tw-text-opacity: 1;
 	color: rgb(255 255 255 / var(--tw-text-opacity));
-	box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, rgb(71, 12, 105) 0 -3px 0 inset;
+	box-shadow:
+		rgba(45, 35, 66, 0.4) 0 2px 4px,
+		rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+		rgb(71, 12, 105) 0 -3px 0 inset;
 }
 html.dark .toggle-btn:hover {
 	--tw-translate-y: -2px;
 	transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x))
 		skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-	box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, rgb(71, 12, 105) 0 -3px 0 inset;
+	box-shadow:
+		rgba(45, 35, 66, 0.4) 0 4px 8px,
+		rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+		rgb(71, 12, 105) 0 -3px 0 inset;
 }
 html.dark .toggle-btn:focus {
-	box-shadow: rgb(71, 12, 105) 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px,
-		rgba(45, 35, 66, 0.3) 0 7px 13px -3px, rgb(71, 12, 105) 0 -3px 0 inset;
+	box-shadow:
+		rgb(71, 12, 105) 0 0 0 1.5px inset,
+		rgba(45, 35, 66, 0.4) 0 2px 4px,
+		rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+		rgb(71, 12, 105) 0 -3px 0 inset;
 }
 html.dark .toggle-btn:focus:hover {
 	--tw-translate-y: -2px;
 	transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x))
 		skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-	box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, rgb(71, 12, 105) 0 -3px 0 inset;
+	box-shadow:
+		rgba(45, 35, 66, 0.4) 0 4px 8px,
+		rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+		rgb(71, 12, 105) 0 -3px 0 inset;
 }
 html.dark .toggle-btn:active {
 	--tw-translate-y: 2px;
@@ -96,41 +119,45 @@ html.dark .toggle-btn:focus:hover:active {
 	box-shadow: rgb(71, 12, 105) 0 3px 7px inset;
 }
 
-input[type='number'] {
+input[type="number"] {
 	-webkit-appearance: textfield;
 	-moz-appearance: textfield;
 	appearance: textfield;
 }
 
-input[type='number']::-webkit-inner-spin-button,
-input[type='number']::-webkit-outer-spin-button {
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
 	-webkit-appearance: none;
 }
 
 div.ck h1 {
-    font-size: 1.875rem;
+	font-size: 1.875rem;
 }
 
 div.ck h2 {
-    font-size: 1.5rem;
+	font-size: 1.5rem;
 }
 
 div.ck h3 {
-    font-size: 1.25rem;
+	font-size: 1.25rem;
 }
 
-div.ck ul, div.ck ol {
-    padding-left: 1.5rem;
+div.ck ul,
+div.ck ol {
+	padding-left: 1.5rem;
 }
 
 div.ck ul li {
-    list-style-type: disc;
+	list-style-type: disc;
 }
 
 div.ck ol li {
-    list-style-type: decimal;
+	list-style-type: decimal;
 }
 
 div.ck a {
-    color: #3182ce;
+	color: #3182ce;
+}
+
+@media print {
 }

@@ -27,7 +27,7 @@ class SQL
         }
     }
 
-    public function query($sql, array $params = []): false|mysqli_result
+    public function query($sql, mixed $params = []): false|mysqli_result
     {
         if (empty($sql)) {
             echo "Query is empty";
@@ -50,13 +50,14 @@ class SQL
                 $type_params .= "s";
             }
         }
+
         if (!empty($type_params)) {
             $stmt->bind_param($type_params, ...$params);
         }
         $process = $stmt->execute();
 
         if (!$process) {
-            $this->error = $this->conn->error;
+            $this->error = $stmt->error;
             return false;
         }
         $this->result = $stmt->get_result();

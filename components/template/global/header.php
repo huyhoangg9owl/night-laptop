@@ -27,8 +27,8 @@
                 <a href="/account/cart" class="relative">
                     <?php Icon("cart", "text-gray-600 dark:text-white") ?>
                     <?php
-                    $cart = $Account->Cart();
-                    if ($cart) :
+                    $cart_valid = $Account->Cart();
+                    if ($cart_valid) :
                     ?>
                         <span class="absolute -right-2 -top-1 size-2 rounded-full bg-red-500"></span>
                     <?php endif; ?>

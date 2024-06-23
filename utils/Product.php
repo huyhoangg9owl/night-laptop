@@ -106,11 +106,21 @@ class Product
         return null;
     }
 
+    public function getTotalProductByCategory(int $category_id): int
+    {
+        global $conn;
+        $result = $conn->query("SELECT COUNT(*) AS total FROM product WHERE category_id = ?", [$category_id]);
+        if ($result) {
+            return $result->fetch_assoc()['total'];
+        }
+        return 0;
+    }
+
     public function getQuantity(int $product_id): int
     {
         global $conn;
         $result = $conn->query("SELECT quantity FROM product WHERE id = ?", [$product_id]);
-        if ($result) {
+        if ($result) {;
             return $result->fetch_assoc()['quantity'];
         }
         return 0;

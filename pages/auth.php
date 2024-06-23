@@ -40,4 +40,4 @@ if (isset($error)) {
 
 $subtitle = $title[$type];
 
-require_once 'components/template/index.php';
+require_once 'components/template/global/index.php';

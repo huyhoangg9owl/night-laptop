@@ -1,10 +1,4 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    http_response_code(405);
-    echo "Method not allowed";
-    exit;
-}
-
 if (isset($_POST["product"])) {
     require_once "../../../config/config.php";
     require_once ROOT_PATH . "/utils/Account.php";

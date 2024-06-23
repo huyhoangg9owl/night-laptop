@@ -14,7 +14,7 @@ require_once ROOT_PATH . "/utils/UploadFile.php";
 $product = new Product();
 $category = new Category();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = $_POST['id'];
     $name = $_POST['name'];
     $price = $_POST['price'];
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 
-    $product_id = $product->updateProduct($id, $name, $price, $description, $quantity, $category_id, $status);
+    $product->updateProduct($id, $name, $price, $description, $quantity, $category_id, $status);
 
     if ($product->getError()) {
         $_SESSION['error'] = $product->getError();
@@ -67,16 +67,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     $upload_dir = ROOT_PATH . "/upload/product/" . hash("sha256", $name . $category_id);
+
     if ($thumbnail_image['error'] == 0) {
         $upload = new UploadFile($thumbnail_image);
         $upload->setUploadDir($upload_dir);
         $upload->setAllowedTypes(["image/png", "image/jpeg", "image/jpg"]);
         $upload->setMaxSize(2 * 1024 * 1024);
-        $upload->setFileName($thumbnail_image['name']);
+        $upload->setFileName(str_replace("." . pathinfo($thumbnail_image["name"], PATHINFO_EXTENSION), "", $thumbnail_image['name']));
         $path = $upload->getPath();
         try {
-            $upload->upload();
-            $conn->query("UPDATE product_image SET image_url = ? WHERE product_id = ?", [$path, $id]);
+            $upload->upload(["width" => 750, "height" => 750]);
+
+            if (count($product->getProductThumbnail($id) ?? [])) $conn->query("UPDATE product_image SET image_url = ? WHERE product_id = ?", [$path, $id]);
+            else $conn->query("INSERT INTO product_image (product_id, image_url, is_thumbnail) VALUES (?, ?, 1)", [$id, $path]);
         } catch (Exception $e) {
             $_SESSION['error'] = "Upload ảnh bìa thất bại";
         }

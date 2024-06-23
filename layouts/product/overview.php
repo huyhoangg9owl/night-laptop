@@ -50,21 +50,15 @@
                             </button>
                         <?php endif; ?>
                     <?php endif; ?>
-                    </?form>
-                    <?php
-                    if ($Product->getQuantityAvailable($product['id']) < 1) :
-                    ?>
-                        <button class="text-center w-full px-5 py-4 rounded-[100px] bg-gray-700 font-semibold text-lg text-white cursor-not-allowed" type="button">
-                            Hết hàng
-                        </button>
-                    <?php else : ?>
-                        <?php if ($account) : ?>
-                            <a href="/checkout/<?= $product['id'] ?>" class="text-center w-full px-5 py-4 rounded-[100px] bg-indigo-600 font-semibold text-lg text-white shadow-sm transition-all duration-500 hover:bg-indigo-700 hover:shadow-indigo-400">
-                                Mua ngay
-                            </a>
-                        <?php endif; ?>
-                    <?php endif;
-                    ?>
+                </form>
+                <?php
+                if ($Product->getQuantityAvailable($product['id']) < 1) :
+                ?>
+                    <button class="text-center w-full px-5 py-4 rounded-[100px] bg-gray-700 font-semibold text-lg text-white cursor-not-allowed" type="button">
+                        Hết hàng
+                    </button>
+                <?php endif;
+                ?>
             </div>
         </div>
     </div>

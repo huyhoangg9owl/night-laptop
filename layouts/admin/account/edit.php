@@ -15,7 +15,7 @@
 
         <div class="mt-8">
             <button type="submit" class="px-5 py-2 bg-sky-600 rounded font-normal text-white">Thay đổi</button>
-            <button type="reset" class="px-5 py-2 bg-red-600 rounded ml-4 font-normal text-white">Hủy</button>
+            <a href="/admin/account" class="px-5 py-2 bg-red-600 rounded ml-4 font-normal text-white">Hủy</a>
         </div>
     </div>
     <div class="w-1/4 flex flex-col items-center">

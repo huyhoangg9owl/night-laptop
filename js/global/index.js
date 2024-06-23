@@ -1,5 +1,7 @@
 import themeToggle from './themeToggle';
-export default function Global() {
+export default function Global(expectedPath = []) {
+    if (expectedPath.find((path) => window.location.pathname.includes(path)))
+        return;
     themeToggle();
     const scrollToTop = document.querySelector('#scroll-to-top');
     document.addEventListener('scroll', () => {

@@ -44,6 +44,6 @@ if is_not_running; then
     start_lampp
 fi
 
-live-server --port=5500 --no-browser | lolcat &
+live-server --port=5500 --ignore=./upload/* --no-browser | lolcat &
 trap stop_lampp SIGINT
 wait

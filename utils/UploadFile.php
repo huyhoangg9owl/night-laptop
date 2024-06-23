@@ -1,5 +1,4 @@
 <?php
-
 class UploadFile
 {
     private mixed $file;
@@ -36,8 +35,7 @@ class UploadFile
     {
         if (!is_dir($this->uploadDir)) {
             if (!is_dir(ROOT_PATH . $this->dir)) {
-                mkdir(ROOT_PATH . $this->dir, 0777);
-                chmod(ROOT_PATH . $this->dir, 0777);
+                mkdir(ROOT_PATH . $this->dir, 0777, true);
             }
             mkdir($this->uploadDir, 0777, true);
         }
@@ -52,7 +50,8 @@ class UploadFile
 
         $this->fileName = $this->fileName ?? pathinfo($this->file["name"], PATHINFO_FILENAME);
 
-        $path = $this->uploadDir . "/" . $this->fileName;
+        $path = $this->uploadDir . "/" . $this->fileName . "." . pathinfo($this->file["name"], PATHINFO_EXTENSION);
+
         move_uploaded_file($this->file["tmp_name"], $path);
 
         if (in_array($this->file["type"], ["image/png", "image/jpeg", "image/jpg"])) {
@@ -62,9 +61,8 @@ class UploadFile
             } elseif ($this->file["type"] === "image/jpeg" || $this->file["type"] === "image/jpg") {
                 $image = imagecreatefromjpeg($path);
             }
-
             $tmp = $this->crop($image, $size);
-            imagejpeg($tmp, $path);
+            imagepng($tmp, $path, 9);
         }
     }
 
@@ -79,6 +77,10 @@ class UploadFile
         $y = (int)(($height - $min) / 2);
 
         $tmp = imagecreatetruecolor($size['width'], $size['height']);
+        imagesavealpha($tmp, true);
+        $transparent = imagecolorallocatealpha($tmp, 0, 0, 0, 127);
+        imagefill($tmp, 0, 0, $transparent);
+
         imagecopyresampled($tmp, $image, 0, 0, $x, $y, $size['width'], $size['height'], $min, $min);
 
         return $tmp;
