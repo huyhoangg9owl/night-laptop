@@ -16,48 +16,48 @@ function StatusColor($status)
 
 <form action="/services/admin/order" method="post" class="w-full overflow-x-auto">
     <button type="submit" name="update" class="my-6 px-4 py-3 rounded-lg text-white font-semibold bg-green-400">Cập nhật</button>
-    <table class="w-full border-separate divide-y divide-gray-200 dark:divide-gray-700">
-        <thead class="bg-gray-50 dark:bg-gray-800">
+    <table class="w-full border-separate divide-y divide-gray-200">
+        <thead class="bg-gray-50">
             <tr>
-                <th scope="col" class="whitespace-nowrap py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 text-center">
+                <th scope="col" class="whitespace-nowrap py-3.5 text-sm font-normal text-gray-500 text-center">
                     Mã đơn hàng
                 </th>
-                <th scope="col" class="whitespace-nowrap py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 text-center">
+                <th scope="col" class="whitespace-nowrap py-3.5 text-sm font-normal text-gray-500 text-center">
                     Khách hàng
                 </th>
-                <th scope="col" class="whitespace-nowrap py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 text-center">
+                <th scope="col" class="whitespace-nowrap py-3.5 text-sm font-normal text-gray-500 text-center">
                     Sản phẩm
                 </th>
-                <th scope="col" class="whitespace-nowrap py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 text-center">
+                <th scope="col" class="whitespace-nowrap py-3.5 text-sm font-normal text-gray-500 text-center">
                     Ngày đặt hàng
                 </th>
-                <th scope="col" class="whitespace-nowrap py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 text-center">
+                <th scope="col" class="whitespace-nowrap py-3.5 text-sm font-normal text-gray-500 text-center">
                     Tổng tiền
                 </th>
-                <th scope="col" class="whitespace-nowrap py-3.5 text-sm font-normal text-gray-500 dark:text-gray-400 text-center">
+                <th scope="col" class="whitespace-nowrap py-3.5 text-sm font-normal text-gray-500 text-center">
                     Trạng thái
                 </th>
             </tr>
         </thead>
-        <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800">
+        <tbody class="bg-white divide-y divide-gray-200">
             <?php foreach ($orders as $order) : ?>
                 <tr>
-                    <td class="whitespace-nowrap px-12 py-4 text-sm font-normal text-dark dark:text-white text-center">
+                    <td class="whitespace-nowrap px-12 py-4 text-sm font-normal text-dark text-center">
                         <?= $order['id'] ?>
                     </td>
-                    <td class="whitespace-nowrap px-12 py-4 text-sm font-normal text-dark dark:text-white">
+                    <td class="whitespace-nowrap px-12 py-4 text-sm font-normal text-dark ">
                         <?= $order['name_reciver'] ?>
                     </td>
-                    <td class="whitespace-nowrap px-12 py-4 text-sm font-normal text-dark dark:text-white">
+                    <td class="whitespace-nowrap px-12 py-4 text-sm font-normal text-dark ">
                         <?= $order['name'] ?>
                     </td>
-                    <td class="whitespace-nowrap px-12 py-4 text-sm font-normal text-dark dark:text-white text-center">
+                    <td class="whitespace-nowrap px-12 py-4 text-sm font-normal text-dark text-center">
                         <?= $order['created_at'] ?>
                     </td>
-                    <td class="whitespace-nowrap px-12 py-4 text-sm font-normal text-dark dark:text-white text-center">
+                    <td class="whitespace-nowrap px-12 py-4 text-sm font-normal text-dark text-center">
                         <?= number_format($order['total']) ?> đ
                     </td>
-                    <td class="whitespace-nowrap px-12 py-4 text-sm font-normal text-dark dark:text-white text-center">
+                    <td class="whitespace-nowrap px-12 py-4 text-sm font-normal text-dark text-center">
                         <select name="status[<?= $order['id'] ?>]" class="px-4 py-2 rounded-lg font-semibold bg-transparent border border-slate-200 <?= StatusColor($order['status']) ?>">
                             <option value="0" <?= $order['status'] == 0 ? 'selected' : '' ?>>Đã hủy</option>
                             <option value="1" <?= $order['status'] == 1 ? 'selected' : '' ?>>Đang chờ xử lý</option>

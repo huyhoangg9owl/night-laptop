@@ -7,8 +7,8 @@ $next_page = $page + 1 >= ceil(count($products) / $show_mode) ? ceil(count($prod
 ?>
 <main class="w-full min-h-dvh relative p-4 container mx-auto">
     <form method="get" class="flex flex-wrap -mx-4 mt-8">
-        <?php require_once ROOT_PATH . "/layouts/category/filter/index.php" ?>
-        <div class="w-full xl:w-3/4 px-4">
+        <!-- <?php require_once ROOT_PATH . "/layouts/category/filter/index.php" ?> -->
+        <div class="w-full px-4">
             <?php
             require_once ROOT_PATH . "/layouts/category/products-table/quick_filter/index.php";
             ?>

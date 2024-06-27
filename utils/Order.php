@@ -1,6 +1,7 @@
 <?php
 require_once ROOT_PATH . "/config/config.php";
 require_once ROOT_PATH . "/utils/Product.php";
+require_once ROOT_PATH . "/utils/Account.php";
 
 class Order
 {
@@ -8,7 +9,7 @@ class Order
     private SQL $conn;
     private mixed $error;
     private mixed $Product;
-
+    private mixed $Account;
 
     public function __construct(int $account_id)
 
@@ -17,11 +18,17 @@ class Order
         $this->conn = $conn;
         $this->account_id = $account_id;
         $this->Product = new Product();
+        $this->Account = new Account();
     }
 
-    public function getOrder(): array
+    public function getOrder(bool $all = false): array
     {
-        $this->conn->query("SELECT `order`.*, `product`.name FROM `order` INNER JOIN `product` ON `order`.product_id = `product`.id WHERE `order`.account_id = ? GROUP BY `order`.id", [$this->account_id]);
+        if ($all) {
+            $this->conn->query("SELECT `order`.*, `product`.name FROM `order` INNER JOIN `product` ON `order`.product_id = `product`.id GROUP BY `order`.id");
+        } else {
+            $this->conn->query("SELECT `order`.*, `product`.name FROM `order` INNER JOIN `product` ON `order`.product_id = `product`.id WHERE `order`.account_id = ? GROUP BY `order`.id", [$this->account_id]);
+        }
+
         return $this->conn->fetch_all();
     }
 
@@ -48,7 +55,7 @@ class Order
 
     public function updateOrderStatus(string $order_id, string $status): void
     {
-        $this->conn->query("UPDATE `order` SET status = ? WHERE account_id = ? AND id = ?", [$status, $this->account_id, $order_id]);
+        $this->conn->query("UPDATE `order` SET status = ? WHERE id = ?", [$status, $order_id]);
     }
 
     public function getPaymentID(): array

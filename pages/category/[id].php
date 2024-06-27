@@ -50,5 +50,19 @@ $conn->query("SELECT * FROM product WHERE category_id = ? ORDER BY created_at DE
 
 $products = $conn->fetch_all();
 
+if ($sort_by === 'oldest') {
+    $products = array_reverse($products);
+} else if ($sort_by === 'price-low') {
+    usort($products, function ($a, $b) {
+        return $a['price'] - $b['price'];
+    });
+} else if ($sort_by === 'price-high') {
+    usort($products, function ($a, $b) {
+        return $b['price'] - $a['price'];
+    });
+}
+
+$products = array_slice($products, ($page - 1) * $show_mode, $show_mode);
+
 $body_component = ROOT_PATH . '/layouts/category/index.php';
 require_once ROOT_PATH . '/components/template/global/index.php';

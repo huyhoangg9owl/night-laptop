@@ -129,7 +129,7 @@ class Product
     public function getQuantityAvailable(int $product_id): int
     {
         global $conn;
-        $conn->query("SELECT SUM(quantity) AS quantity FROM cart WHERE product_id = ?", [$product_id]);
+        $conn->query("SELECT SUM(quantity) AS quantity FROM `order` WHERE product_id = ?", [$product_id]);
         if ($conn->num_rows() > 0) {
             $cart = $conn->fetch_once();
             return $this->getQuantity($product_id) - $cart['quantity'];

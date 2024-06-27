@@ -16,7 +16,7 @@ if ($account) {
         $best_seller_products = $Order->getBestSellerProducts();
         $best_seller_categories = $Order->getBestSellerCategories();
 
-        $orders = $Order->getOrder();
+        $orders = $Order->getOrder(true);
         $body_component = ROOT_PATH . '/layouts/admin/order/index.php';
         require_once ROOT_PATH . '/components/template/admin/index.php';
     } else {

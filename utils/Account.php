@@ -137,6 +137,15 @@ class Account
         return null;
     }
 
+    public function isAdmin(): bool
+    {
+        if ($this->checkToken()) {
+            $profile = $this->getAccountProfile();
+            if ($profile['role'] === 'admin') return true;
+        }
+        return false;
+    }
+
     public function addToCart(int $product_id, int $quantity = 1): void
     {
         global $conn;

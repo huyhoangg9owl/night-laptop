@@ -2,7 +2,8 @@
     <div class="container mx-auto flex items-center justify-between px-8 py-4 lg:px-0">
         <a href="/">
             <h1 class="madimi-one-regular text-4xl">
-                <span class="text-sky-400">9</span><span class="card text-zinc-500 dark:text-white">LapTop</span>
+                <span class="text-sky-400"><?= explode(" ", $seo_setting['title'])[0] ?? "" ?></span>
+                <span class="card text-zinc-500 dark:text-white"><?= explode(" ", $seo_setting['title'])[1] ?? "" ?></span>
             </h1>
         </a>
         <form action="/search" method="get" class="w-1/2 rounded border border-gray-200 p-2 pl-6 md:block dark:border-gray-400/80 relative">

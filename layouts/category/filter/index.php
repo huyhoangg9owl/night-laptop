@@ -15,7 +15,6 @@ if (isset($_GET['price_range'])) {
 if (isset($_GET['color'])) {
     $colors_params = $_GET['color'];
 }
-
 ?>
 
 <div class="w-full h-full xl:w-1/4 px-4 mb-6 xl:mb-0">
